@@ -1,0 +1,3 @@
+Hello, Java.
+I am learning file handling.
+Today is Day 10 of my learning.
