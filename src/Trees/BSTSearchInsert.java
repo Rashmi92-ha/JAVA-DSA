@@ -1,6 +1,6 @@
 package Trees;
 
-public class BinarySearchTreeInsertion {
+public class BSTSearchInsert {
     static class Node{
         int data;
         Node left;
@@ -37,6 +37,37 @@ public class BinarySearchTreeInsertion {
         }
     }
 
+    static Node delete(Node root, int value){
+        if(root == null){
+            return null;
+        }
+        if(value < root.data){
+            root.left = delete(root.left, value);
+        } else if (value > root.data) {
+            root.right = delete(root.right,value);
+        }else{
+            if(root.left == null && root.right == null){
+                return null;
+            }
+            if(root.left == null){
+                return root.right;
+            }
+            if(root.right == null){
+                return root.left;
+            }
+            Node successor = finMin(root.right);
+            root.data = successor.data;
+            root.right = delete(root.right, successor.data);
+        }
+        return root;
+    }
+    static Node finMin(Node root){
+        while (root.left != null){
+            root = root.left;
+        }
+        return root;
+    }
+
     static void BTS(Node root){
         if(root == null){
             return;
@@ -57,5 +88,8 @@ public class BinarySearchTreeInsertion {
         boolean rootSearch = search(root, 6);
         System.out.println("Is the value Present: " + rootSearch);
 
+        root = delete(root, 7);
+        System.out.println("The BST of the Deleted Node: ");
+        BTS(root);
     }
 }
