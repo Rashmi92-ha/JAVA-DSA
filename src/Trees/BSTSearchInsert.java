@@ -23,7 +23,7 @@ public class BSTSearchInsert {
         return root;
     }
 
-    static Boolean search(Node root, int value){
+    static boolean search(Node root, int value){
         if(root == null){
             return false;
         }
@@ -68,6 +68,16 @@ public class BSTSearchInsert {
         return root;
     }
 
+    static boolean isValid(Node root, long min, long max){
+        if(root == null){
+            return true;
+        }
+        if(root.data <= min || root.data >= max){
+            return false;
+        }
+        return isValid(root.left , min, root.data) && isValid(root.right , root.data, max);
+    }
+
     static void BTS(Node root){
         if(root == null){
             return;
@@ -91,5 +101,8 @@ public class BSTSearchInsert {
         root = delete(root, 7);
         System.out.println("The BST of the Deleted Node: ");
         BTS(root);
+
+       boolean valid = isValid(root, Long.MIN_VALUE, Long.MAX_VALUE );
+       System.out.println("Is Valid BST: " + valid);
     }
 }
