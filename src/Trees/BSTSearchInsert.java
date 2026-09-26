@@ -95,6 +95,13 @@ public class BSTSearchInsert {
         }
         return countLeafNode(root.left) + countLeafNode(root.right);
     }
+
+    static int countNodes(Node root){
+        if(root == null){
+            return 0;
+        }
+        return 1 + countNodes(root.left) + countNodes(root.right);
+    }
     public static void main(String[] args){
         Node root = null;
         int[] values = {10,5,3,20,7,15};
@@ -105,6 +112,7 @@ public class BSTSearchInsert {
         BTS(root);
 
         System.out.println("Count of Leaf Node: " + countLeafNode(root));
+        System.out.println("Count Number of Nodes: " + countNodes(root));
 
         boolean rootSearch = search(root, 6);
         System.out.println("Is the value Present: " + rootSearch);
