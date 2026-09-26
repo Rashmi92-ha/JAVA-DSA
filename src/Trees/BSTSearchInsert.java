@@ -86,6 +86,15 @@ public class BSTSearchInsert {
         System.out.println(root.data + " ");
         BTS(root.right);
     }
+    static int countLeafNode(Node root){
+        if(root == null){
+            return 0;
+        }
+        if(root.left == null && root.right == null){
+            return 1;
+        }
+        return countLeafNode(root.left) + countLeafNode(root.right);
+    }
     public static void main(String[] args){
         Node root = null;
         int[] values = {10,5,3,20,7,15};
@@ -94,6 +103,8 @@ public class BSTSearchInsert {
         }
         System.out.println("Binary Search tree: ");
         BTS(root);
+
+        System.out.println("Count of Leaf Node: " + countLeafNode(root));
 
         boolean rootSearch = search(root, 6);
         System.out.println("Is the value Present: " + rootSearch);
@@ -104,5 +115,6 @@ public class BSTSearchInsert {
 
        boolean valid = isValid(root, Long.MIN_VALUE, Long.MAX_VALUE );
        System.out.println("Is Valid BST: " + valid);
+
     }
 }
