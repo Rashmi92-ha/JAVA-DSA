@@ -13,31 +13,37 @@ public class DFS {
             }
         }
     }
+    static int countComponent(ArrayList<ArrayList<Integer>> graph ){
+        boolean[] visited = new boolean[graph.size()];
+        int count = 0;
+        for(int i=0 ; i< graph.size();i++){
+           if(!visited[i]){
+               count++;
+               dfs(graph,i,visited);
+           }
+        }
+        return count;
+    }
+
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the number of Vertices: ");
         int num = sc.nextInt();
+        System.out.println("Enter the number of edges: ");
+        int edges = sc.nextInt();
 
         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
         for(int i=0; i<num ; i++){
             graph.add(new ArrayList<>());
         }
-        graph.get(0).add(1);
-        graph.get(1).add(0);
+        for(int i=0; i<edges;i++){
+            int u = sc.nextInt();
+            int v = sc.nextInt();
 
-        // 0 -- 3
-        graph.get(0).add(3);
-        graph.get(3).add(0);
-
-        // 1 -- 2
-        graph.get(1).add(2);
-        graph.get(2).add(1);
-
-        // 3 -- 2
-        graph.get(3).add(2);
-        graph.get(2).add(3);
-
-        boolean[] visited = new boolean[num];
-
-        dfs(graph, 0, visited);
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+        System.out.println("DFS Traversal: ");
+        System.out.println("Component Count: " + countComponent(graph));
     }
 }
