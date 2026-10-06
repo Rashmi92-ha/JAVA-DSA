@@ -49,11 +49,50 @@ public class MinHeap {
         return data[0];
     }
 
-    public void display() {
-        for (int i = 0; i < size; i++) {
-            System.out.print(data[i] + " ");
+    // Replaces the current contents with arr and arranges it into a min-heap (O(n))
+    public void buildHeap(int[] arr) {
+        if (arr == null) {
+            throw new IllegalArgumentException("Array must not be null");
         }
-        System.out.println();
+        if (arr.length > data.length) {
+            throw new IllegalArgumentException("Array is larger than heap capacity");
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            data[i] = arr[i];
+        }
+        size = arr.length;
+
+        int lastNonLeaf = (size / 2) - 1;
+        for (int i = lastNonLeaf; i >= 0; i--) {
+            heapifyDown(i);
+        }
+    }
+
+    // Prints the heap one tree level per line
+    public void printHeap() {
+        if (size == 0) {
+            System.out.println("Heap is empty");
+            return;
+        }
+
+        int index = 0;
+        int level = 0;
+
+        while (index < size) {
+            int elementsInLevel = 1 << level;   // 2^level
+
+            for (int i = 0; i < elementsInLevel && index < size; i++) {
+                if (i > 0) {
+                    System.out.print(" ");
+                }
+                System.out.print(data[index]);
+                index++;
+            }
+
+            System.out.println();
+            level++;
+        }
     }
 
     // Move the value at index up while it is smaller than its parent
@@ -104,12 +143,12 @@ public class MinHeap {
         minHeap.insert(5);
 
         System.out.println("Heap:");
-        minHeap.display();
+        minHeap.printHeap();
         System.out.println("Minimum: " + minHeap.peek());
 
         System.out.println("Removed: " + minHeap.extractMin());
         System.out.println("After removing the root:");
-        minHeap.display();
+        minHeap.printHeap();
         System.out.println("Minimum: " + minHeap.peek());
 
         // Fill the heap to show the full-heap error
@@ -128,6 +167,20 @@ public class MinHeap {
         try {
             minHeap.peek();
         } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Build a heap directly from an array
+        int[] arr = {20, 5, 15, 30, 10};
+        minHeap.buildHeap(arr);
+        System.out.println("Heap built from array:");
+        minHeap.printHeap();
+        System.out.println("Minimum: " + minHeap.peek());
+
+        // Show the buildHeap error for an array that is too large
+        try {
+            minHeap.buildHeap(new int[]{1, 2, 3, 4, 5, 6});
+        } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
